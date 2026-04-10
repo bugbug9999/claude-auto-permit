@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Telegram Guard for Claude Code
+Claude Auto Permit
 - tmux 세션 출력을 감시해서 권한 프롬프트 감지
 - 텔레그램으로 알림 + 인라인 키보드 (승인/거부)
 - 응답에 따라 tmux에 키 입력

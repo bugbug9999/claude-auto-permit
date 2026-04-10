@@ -1,4 +1,4 @@
-# Telegram Guard for Claude Code
+# Claude Auto Permit
 
 Claude Code를 원격으로 쓸 때 권한 프롬프트가 떠서 작업이 멈추는 문제를 해결합니다.
 
@@ -23,8 +23,8 @@ telegram_guard.py (백그라운드 데몬)
 ## 설치
 
 ```bash
-git clone https://github.com/bugbug9999/telegram-guard.git
-cd telegram-guard
+git clone https://github.com/bugbug9999/claude-auto-permit.git
+cd claude-auto-permit
 ./setup.sh
 ```
 

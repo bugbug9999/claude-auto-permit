@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────
-# Telegram Guard for Claude Code — Setup Script
+# Claude Auto Permit — Setup Script
 # ─────────────────────────────────────────────
 
 set -e
@@ -10,7 +10,7 @@ CONFIG="$SCRIPT_DIR/config.json"
 
 echo ""
 echo "╔══════════════════════════════════════════╗"
-echo "║  Telegram Guard for Claude Code — Setup  ║"
+echo "║    Claude Auto Permit — Setup             ║"
 echo "╚══════════════════════════════════════════╝"
 echo ""
 
