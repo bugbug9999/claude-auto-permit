@@ -5,6 +5,7 @@
   "poll_interval": 2,
   "timeout_seconds": 900,
   "timeout_action": "deny",
+  "macos_dialog_monitor": true,
   "auto_approve_patterns": [
     "Read",
     "Glob",

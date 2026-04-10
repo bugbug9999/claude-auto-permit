@@ -7,15 +7,17 @@ Claude Code를 원격으로 쓸 때 권한 프롬프트가 떠서 작업이 멈�
 ## 동작 원리
 
 ```
-Claude Code (tmux 세션 안에서 실행)
-     │
-     ├─ 권한 프롬프트 발생 ("Allow Bash tool?")
-     │
 telegram_guard.py (백그라운드 데몬)
-     ├─ tmux 출력 2초마다 감시 (로컬 명령어, 토큰 소모 없음)
-     ├─ 프롬프트 패턴 감지
-     ├─ 텔레그램으로 알림 전송 (승인/거부 버튼)
-     └─ 응답에 따라 tmux에 'y' 또는 'n' 키 입력
+     │
+     ├─ [1] tmux 터미널 감시 (2초마다)
+     │   ├─ "Allow Bash tool?" 같은 프롬프트 감지
+     │   ├─ 텔레그램으로 알림 (승인/거부 버튼)
+     │   └─ 응답에 따라 'y' 또는 'n' 키 입력
+     │
+     └─ [2] macOS 시스템 다이얼로그 감시 (6초마다)
+         ├─ "허용/Allow" 버튼이 있는 팝업 감지
+         ├─ 텔레그램으로 알림 (앱 이름 + 내용 + 버튼 목록)
+         └─ 응답에 따라 허용/거부 버튼 자동 클릭
 ```
 
 **AI API 호출 없음. 토큰 소모 0.**
@@ -68,6 +70,7 @@ tmux attach -t claude
 | `timeout_action` | `"deny"` | 타임아웃 시 동작 (`"deny"` 또는 `"approve"`) |
 | `auto_approve_patterns` | `["Read", "Glob", ...]` | 알림 없이 자동 승인할 도구 |
 | `tmux_session` | `"claude"` | tmux 세션 이름 |
+| `macos_dialog_monitor` | `true` | macOS 시스템 다이얼로그 감시 on/off |
 
 ### 자동 승인 예시
 
@@ -85,9 +88,26 @@ tmux attach -t claude
 }
 ```
 
+## macOS 다이얼로그 감시
+
+macOS에서 "이 앱이 컴퓨터를 관리하려고 합니다" 같은 시스템 팝업도 감지합니다.
+
+- `osascript`(AppleScript)로 열려있는 다이얼로그를 스캔
+- "허용/Allow" 버튼이 있으면 텔레그램으로 알림
+- 승인 시 해당 버튼을 자동 클릭
+
+**필요 권한:** 시스템 설정 > 개인정보 보호 및 보안 > 손쉬운 사용에서 터미널(또는 iTerm) 허용 필요
+
+끄고 싶으면 config.json에서:
+```json
+{
+  "macos_dialog_monitor": false
+}
+```
+
 ## 요구사항
 
-- macOS (Linux도 가능)
+- macOS (Linux는 tmux 감시만 가능, 다이얼로그 감시 자동 비활성화)
 - Python 3.6+
 - tmux
 - 텔레그램 계정 + 봇
