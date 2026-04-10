@@ -1,0 +1,15 @@
+{
+  "bot_token": "YOUR_BOT_TOKEN_HERE",
+  "chat_id": "YOUR_CHAT_ID_HERE",
+  "tmux_session": "claude",
+  "poll_interval": 2,
+  "timeout_seconds": 900,
+  "timeout_action": "deny",
+  "auto_approve_patterns": [
+    "Read",
+    "Glob",
+    "Grep",
+    "WebSearch",
+    "WebFetch"
+  ]
+}
